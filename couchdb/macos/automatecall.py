@@ -1,13 +1,15 @@
 import requests
 
 
+
 nodes = [ ("172.20.0.2","5984"), ("172.20.0.3","15984") ,("172.20.0.4","25984")]
 masternode = nodes[0]
 
 
 for address in nodes:
     URL = "http://user:pass@localhost:%s/_cluster_setup" % (address[1])
-    print(URL)
+   # print(URL)
+
     r = requests.post(URL,json={"action":"enable_cluster","bind_address":"0.0.0.0"
     ,"username":"user","password":"pass","node_count":"3"})
 
