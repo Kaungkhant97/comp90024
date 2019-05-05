@@ -12,7 +12,7 @@ services:
       - couch_slave1
       - couch_slave2
     volumes:
-      - /Users/alwynpan/Workspace/Teaching/couchdb/master/data:/opt/couchdb/data
+      - ${PWD}/master:/opt/couchdb/data
     environment:
       - COUCHDB_USER=user
       - COUCHDB_PASSWORD=pass
@@ -27,7 +27,7 @@ services:
     ports:
       - "15984:5984"
     volumes:
-      - /Users/alwynpan/Workspace/Teaching/couchdb/slave1/data:/opt/couchdb/data
+      - ${PWD}/data1:/opt/couchdb/data
     environment:
       - COUCHDB_USER=user
       - COUCHDB_PASSWORD=pass
@@ -42,7 +42,7 @@ services:
     ports:
       - "25984:5984"
     volumes:
-      - /Users/alwynpan/Workspace/Teaching/couchdb/slave2/data:/opt/couchdb/data
+      - ${PWD}/data2:/opt/couchdb/data
     environment:
       - COUCHDB_USER=user
       - COUCHDB_PASSWORD=pass
