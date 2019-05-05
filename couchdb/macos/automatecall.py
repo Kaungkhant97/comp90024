@@ -33,19 +33,22 @@ for address in nodes:
 
         print(r.json())
 
-URL = "http://user:pass@localhost:%s/_cluster_setup" % (masternode[1])
-
-r = requests.post(URL, json={
+address = "http://user:pass@localhost:5984/_cluster_setup"
+print(address)
+r = requests.post(address, json={
             "action": "finish_cluster",
         })
 
 print(r.json())
-
-print(requests.get(URL))
+r = requests.get(address)
+print(r.json())
 
 for address in nodes:
-    URL = f"http://user:pass@localhost:address[1]/_membership"
-    print(requests.get(URL))
+
+    murl = "http://user:pass@localhost:%s/_membership" %address[1]
+    print(murl)
+    r =requests.get(murl)
+    print(r.json())
 
 
 
