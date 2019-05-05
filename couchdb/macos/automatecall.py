@@ -11,7 +11,7 @@ for address in nodes:
     r = requests.post(URL,json={"action":"enable_cluster","bind_address":"0.0.0.0"
     ,"username":"user","password":"pass","node_count":"3"})
 
-    print(r.json())
+    print(r.content)
 
 for address in nodes:
     URL = "http://user:pass@localhost:%s/_cluster_setup" % (masternode[1])
@@ -20,7 +20,7 @@ for address in nodes:
         r = requests.post(URL,json={"action":"enable_cluster","bind_address":"0.0.0.0"
          ,"username":"user","password":"pass","port":"5984","node_count":f"nodes.__len__()",
          "remote_node": f"address[0]", "remote_current_user": "user", "remote_current_password": "pass"})
-        print(r.json())
+        print(r.content)
         r = requests.post(URL, json={
             "action": "add_node",
             "host": address[0],
@@ -39,16 +39,16 @@ r = requests.post(address, json={
             "action": "finish_cluster",
         })
 
-print(r.json())
+print(r.content)
 r = requests.get(address)
-print(r.json())
+print(r.content)
 
 for address in nodes:
 
     murl = "http://user:pass@localhost:%s/_membership" %address[1]
     print(murl)
     r =requests.get(murl)
-    print(r.json())
+    print(r.content)
 
 
 
