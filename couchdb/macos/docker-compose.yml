@@ -1,5 +1,16 @@
 version: "3"
 services:
+  harvester:
+    image: "kkt97/harvester:latest"
+    restart: always
+    ports:
+      - "999:999"
+    links:
+      - couch_master
+    container_name: harvester
+    networks:
+      couchdb_nw:
+        ipv4_address: 172.20.0.91
   couch_master:
     image: "couchdb:2.3.0"
     restart: always
@@ -51,6 +62,7 @@ services:
     networks:
       couchdb_nw:
         ipv4_address: 172.20.0.4
+  
 
 networks:
   couchdb_nw:

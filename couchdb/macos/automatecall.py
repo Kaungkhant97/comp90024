@@ -54,5 +54,14 @@ for address in nodes:
     print(r.content)
 
 
+contents = open('design.json', 'rb').read()
+dURL = "http://user:pass@localhost:5984/dev-task/_design/task"
+myrequest = requests.post(dURL,contents)
+print(myrequest.content)
+
+URL = "http://user:pass@localhost:5984/twitter"
+db = requests.put(URL).content
+print(db)
+
 
 
