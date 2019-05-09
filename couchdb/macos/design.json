@@ -1,85 +1,67 @@
 {
   "_id": "_design/new_view",
+  "_rev": "74-602190cf4e65ba8b4207cb099d83a419",
   "views": {
-    "2012-words": {
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2012\"){\n    for(var i =0; i<splitted.length;i++){\n      emit([doc.LGA_code, splitted[i]],1)\n    }\n  }\n}",
-      "reduce": "_sum"
-    },
-    "2013-words": {
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2013\"){\n    for(var i =0; i<splitted.length;i++){\n      emit([doc.LGA_code, splitted[i]],1)\n    }\n  }\n}",
-      "reduce": "_sum"
-    },
-    "2014-words": {
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2014\"){\n    for(var i =0; i<splitted.length;i++){\n      emit([doc.LGA_code, splitted[i]],1)\n    }\n  }\n}",
-      "reduce": "_sum"
-    },
-    "2015-words": {
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2015\"){\n    for(var i =0; i<splitted.length;i++){\n      emit([doc.LGA_code, splitted[i]],1)\n    }\n  }\n}",
-      "reduce": "_sum"
-    },
-    "2016-words": {
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2016\"){\n    for(var i =0; i<splitted.length;i++){\n      emit([doc.LGA_code, splitted[i]],1)\n    }\n  }\n}",
-      "reduce": "_sum"
-    },
-    "word-count": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  for(var i =0; i<splitted.length;i++){\n    emit([year, doc.LGA_code, splitted[i]],1)\n  }\n}"
-    },
     "LGA_code": {
       "reduce": "_count",
       "map": "function (doc) {\n    emit(doc.LGA_code,1)\n}"
-    },
-    "2012-areas": {
-      "reduce": "_count",
-      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2012\"){\n    emit(doc.LGA_code,1)\n  }\n}"
-    },
-    "2013-areas": {
-      "reduce": "_count",
-      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2013\"){\n    emit(doc.LGA_code,1)\n  }\n}"
-    },
-    "2014-areas": {
-      "reduce": "_count",
-      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2014\"){\n    emit(doc.LGA_code,1)\n  }\n}"
-    },
-    "2015-areas": {
-      "reduce": "_count",
-      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2015\"){\n    emit(doc.LGA_code,1)\n  }\n}"
-    },
-    "2016-areas": {
-      "reduce": "_count",
-      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2016\"){\n    emit(doc.LGA_code,1)\n  }\n}"
-    },
-    "2012-negatives": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2012\" && doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
-    },
-    "2013-negatives": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2013\" && doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
-    },
-    "2014-negatives": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2014\" && doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
-    },
-    "2015-negatives": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2015\" && doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
-    },
-    "2016-negatives": {
-      "reduce": "_sum",
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2016\" && doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
     },
     "negative-count": {
       "reduce": "_count",
       "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (doc.sentiment< -0.3 ){\n      emit(doc.LGA_code, 1)\n  }\n}"
     },
-    "2012-topics": {
-      "map": "function (doc) {\n\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (year ==\"2012\" && doc.sentiment< -0.3 ){\n    for(var i =0; i<doc.hashtags.length;i++)\n      emit([doc.LGA_code, doc.hashtags[i]], 1)\n  }\n}",
-      "reduce": "_count"
-    },
     "topics": {
       "reduce": "_sum",
       "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (doc.sentiment< -0.3 ){\n    for(var i =0; i<doc.hashtags.length;i++)\n      emit([doc.LGA_code, doc.hashtags[i]], 1)\n  }\n}"
+    },
+    "word-count-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.LGA_code){\n    for(var i =0; i<splitted.length;i++){\n      emit([splitted[i], doc.LGA_code, year],1)\n    }\n  }\n}"
+    },
+    "word-count-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.city){\n    for(var i =0; i<splitted.length;i++){\n      emit([splitted[i], doc.city, year],1)\n    }\n  }\n}"
+    },
+    "tweet-count-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  if(doc.LGA_code){\n    time_info = doc.created_at.split(\" \")\n    year = time_info[time_info.length-1]\n    emit([doc.LGA_code, year], 1);\n  }\n}"
+    },
+    "tweet-count-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.city){\n    emit([doc.city, year], 1);\n  }\n}"
+    },
+    "hashtag-count-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (doc.city){\n    for(var i =0; i<doc.hashtags.length;i++)\n      emit([doc.hashtags[i], doc.city, year], 1)\n  }\n}"
+    },
+    "hashtag-count-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if (doc.LGA_code){\n    for(var i =0; i<doc.hashtags.length;i++)\n      emit([doc.hashtags[i], doc.LGA_code, year], 1)\n  }\n}"
+    },
+    "word-count-year-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.LGA_code){\n    for(var i =0; i<splitted.length;i++){\n      emit([splitted[i], year, doc.LGA_code],1)\n    }\n  }\n}"
+    },
+    "word-count-year-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  splitted = doc.text.split(\" \");\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.city){\n    for(var i =0; i<splitted.length;i++){\n      emit([splitted[i], year, doc.city],1)\n    }\n  }\n}"
+    },
+    "negative-topics-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\nif(doc.city){\n    time_info = doc.created_at.split(\" \")\n    year = time_info[time_info.length-1]\n    if (doc.sentiment< -0.3 ){\n      for(var i =0; i<doc.hashtags.length;i++)\n        emit([doc.hashtags[i], doc.city, year], 1)\n    }\n  }\n}"
+    },
+    "negative-topics-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\nif(doc.LGA_code){\n    time_info = doc.created_at.split(\" \")\n    year = time_info[time_info.length-1]\n    if (doc.sentiment< -0.3 ){\n      for(var i =0; i<doc.hashtags.length;i++)\n        emit([doc.hashtags[i], doc.LGA_code, year], 1)\n    }\n  }\n}"
+    },
+    "negative-tweets-city": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.city && doc.sentiment< -0.3 ){\n    emit([doc.city, year], 1);\n  }\n}"
+    },
+    "negative-tweets-lga": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  time_info = doc.created_at.split(\" \")\n  year = time_info[time_info.length-1]\n  if(doc.LGA_code && doc.sentiment< -0.3 ){\n    emit([doc.LGA_code, year], 1);\n  }\n}"
     }
   },
   "language": "javascript"
+}

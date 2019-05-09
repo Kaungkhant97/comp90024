@@ -55,8 +55,8 @@ for address in nodes:
 
 
 contents = open('design.json', 'rb').read()
-dURL = "http://user:pass@localhost:5984/dev-task/_design/task"
-myrequest = requests.post(dURL,json =contents,proxies = p)
+dURL = "http://user:pass@localhost:5984/twitter/_design/task"
+myrequest = requests.post(dURL,contents,proxies = p)
 print(myrequest.content)
 
 pURL = "http://user:pass@localhost:5984/twitter"
