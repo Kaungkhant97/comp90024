@@ -54,6 +54,7 @@ for address in nodes:
     print(r.content)
 
 
+
 contents = open('design.json', 'rb').read()
 dURL = "http://user:pass@localhost:5984/twitter/_design/task"
 myrequest = requests.post(dURL,contents,proxies = p)
