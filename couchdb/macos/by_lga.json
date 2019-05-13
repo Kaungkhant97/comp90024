@@ -1,0 +1,11 @@
+{
+  "_id": "_design/by_lga",
+
+  "language": "javascript",
+  "views": {
+    "negative_average": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  sent = doc.sentiment < -0.3 ? -doc.sentiment : 0\n  if(doc.LGA_code) {\n    emit([doc.LGA_code, doc.created_at], {sentiment:sent, total:1});\n  }\n}"
+    }
+  }
+}

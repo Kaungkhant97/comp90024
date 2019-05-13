@@ -1,67 +1,73 @@
-version: "2.1"
-
+version: "3"
 services:
-  spark-master:
-    image: spark-2:2.4.1
-    command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
-    environment:
-      MASTER: spark://spark-master:7077
-      SPARK_CONF_DIR: /conf
-      SPARK_PUBLIC_DNS: 173.17.2.2
-    expose:
-      - 7001
-      - 7002
-      - 7003
-      - 7004
-      - 7005
-      - 7006
-      - 7077
-    ports:
-      - 4040:4040
-      - 6066:6066
-      - 7077:7077
-      - 8080:8080
-    volumes:
-      - ./conf/spark-master:/conf
-      - ./data:/tmp/data
-    networks:
-      sparknet:
-        ipv4_address: "173.17.2.2"
+  harvester:
+    image: "kkt97/harvester:latest"
 
-  spark-worker-1:
-    image: spark-2:2.4.1
-    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
-    environment:
-      SPARK_CONF_DIR: /conf
-      SPARK_PUBLIC_DNS: 173.17.2.3
-      SPARK_WORKER_CORES: 2
-      SPARK_WORKER_MEMORY: 1g
-      SPARK_WORKER_PORT: 8881
-      SPARK_WORKER_WEBUI_PORT: 8081
-    links:
-      - spark-master
-    expose:
-      - 7012
-      - 7013
-      - 7014
-      - 7015
-      - 7016
     ports:
-      - 8081:8081
-    volumes:
-      - ./conf/spark-worker-1:/conf
-      - ./data:/tmp/data
+      - "999:999"
+    links:
+      - couch_master
+    container_name: harvester
     networks:
-      sparknet:
-        ipv4_address: "173.17.2.3"
+      couchdb_nw:
+        ipv4_address: 172.30.0.91
+
+  couch_master:
+    image: "couchdb:2.3.0"
+    restart: always
+    ports:
+      - "5984:5984"
+      - "5986:5986"
+      - "4369:4369"
+      - "9100-9200:9100-9200"
+    links:
+      - couch_slave1
+      - couch_slave2
+    volumes:
+      - ${PWD}/master:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=user
+      - COUCHDB_PASSWORD=pass
+      - NODENAME=172.30.0.2
+    container_name: couch_master
+    networks:
+      couchdb_nw:
+        ipv4_address: 172.30.0.2
+  couch_slave1:
+    image: "couchdb:2.3.0"
+    restart: always
+    ports:
+      - "15984:5984"
+    volumes:
+      - ${PWD}/data1:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=user
+      - COUCHDB_PASSWORD=pass
+      - NODENAME=172.30.0.3
+    container_name: couch_slave1
+    networks:
+      couchdb_nw:
+        ipv4_address: 172.30.0.3
+  couch_slave2:
+    image: "couchdb:2.3.0"
+    restart: always
+    ports:
+      - "25984:5984"
+    volumes:
+      - ${PWD}/data2:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=user
+      - COUCHDB_PASSWORD=pass
+      - NODENAME=172.30.0.4
+    container_name: couch_slave2
+    networks:
+      couchdb_nw:
+        ipv4_address: 172.30.0.4
+
 
 networks:
-  sparknet:
+  couchdb_nw:
     driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
     ipam:
-      driver: default
       config:
-        - subnet: "173.17.2.0/24"
-          gateway: "173.17.2.1"
+        - subnet: 172.30.0.0/16

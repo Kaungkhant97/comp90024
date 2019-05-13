@@ -1,0 +1,11 @@
+{
+  "_id": "_design/by_hashtag",
+
+  "language": "javascript",
+  "views": {
+    "hashtag_sentiment": {
+      "reduce": "_sum",
+      "map": "function (doc) {\n  if (doc.LGA_code){\n    var sentiment = doc.sentiment < -0.3 ? -doc.sentiment : 0\n    for(var i =0; i<doc.hashtags.length;i++)\n      emit([doc.hashtags[i].toLowerCase(), doc.LGA_code], {sentiment : sentiment, total : 1})\n  }\n}"
+    }
+  }
+}

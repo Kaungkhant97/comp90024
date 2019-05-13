@@ -1,6 +1,6 @@
 {
-  "_id": "_design/new_view",
-  "_rev": "74-602190cf4e65ba8b4207cb099d83a419",
+  "_id": "_design/random_view",
+
   "views": {
     "LGA_code": {
       "reduce": "_count",

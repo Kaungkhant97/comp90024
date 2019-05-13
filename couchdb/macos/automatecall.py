@@ -53,16 +53,29 @@ for address in nodes:
     r =requests.get(murl,proxies = p)
     print(r.content)
 
-
-
-contents = open('design.json', 'rb').read()
-dURL = "http://user:pass@localhost:5984/twitter/_design/task"
-myrequest = requests.post(dURL,contents,proxies = p)
-print(myrequest.content)
-
 pURL = "http://user:pass@localhost:5984/twitter"
 db = requests.put(pURL,proxies = p).content
 print(db)
+
+by_hashtag = open('by_hashtag.json', 'rb').read()
+hURL = "http://user:pass@localhost:5984/twitter/_design/by_hashtag"
+r1 = requests.put(hURL,data=by_hashtag,proxies = p)
+print(r1.content)
+
+by_lga = open('by_lga.json', 'rb').read()
+lURL = "http://user:pass@localhost:5984/twitter/_design/by_lga"
+r2 = requests.put(lURL,data=by_lga,proxies = p)
+print(r2.content)
+
+by_word = open('by_word.json', 'rb').read()
+dURL = "http://user:pass@localhost:5984/twitter/_design/by_word"
+r3 = requests.put(dURL,data=by_word,proxies = p)
+print(r3.content)
+
+
+
+
+
 
 
 
